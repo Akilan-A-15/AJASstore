@@ -1,0 +1,57 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+<title> Cart | AJAS </title>
+{% endblock title %}
+{% block content %}
+<section  style="margin-top: 70px;">
+    <section class="bg-light py-4 ny-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="nb-3">Buy Items</h4>
+                    <hr style="border-color: #b8bfc2;">
+                </div>
+                <div class="bill" style="border-color: #6c6e6e;">
+                    <form method="post" action="">
+                        <table>
+                            <tr>
+                                <th>Product Name </th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                            </tr>
+                            
+                            {% for item in bill %}
+
+                            <tr>
+                            <td>{{item.product.name}}</td>
+                            <td style="text-align: center;">{{item.product_qty}}</td>
+                            <td class="amt">{{item.total_cost | stringformat:'d'}}</td>
+                            </tr>
+                            {% endfor %}
+                            <td colspan="2"><b>Total Amount</b></td>
+                            <td id="net">0</td>
+                            <tr>
+                                <td></td>
+                                
+                                <td colspan="2"><a href="{% url 'oder_s' %}" onclick="return confirm('are you sure to oder?')" class="btn btn-success btn-sn">Buy Now</a></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+</section>
+<script>
+    const nodes = document.querySelectorAll('.amt');
+    const arr = Array.from(nodes);
+    const res = arr.reduce((acc,curr) => {
+        return acc += Number(curr.textContent)
+    },0);
+    document.getElementById("net").innerHTML="Rs : "+res;
+</script>
+
+
+{% endblock content %}
